@@ -18,7 +18,9 @@ window.setup = function () {
 window.draw = function () {
   background(14, 16, 18)
   if (playersHandler.getPlayer(socket.id)) {
-    terminal.updatePlayerCurrentLetter(playersHandler.getPlayer(socket.id).currentIndex)
+    terminal.updatePlayerCurrentLetter(
+      playersHandler.getPlayer(socket.id).currentIndex
+    )
   }
 
   terminal.draw()
@@ -26,18 +28,19 @@ window.draw = function () {
   masterBranch.draw()
 }
 
-
-window.keyPressed = function(e){
-    e.preventDefault();
-    terminal.wrongLetter = false;
-    socket.emit("keyPressed", key);
+window.keyPressed = function (e) {
+  e.preventDefault()
+  terminal.wrongLetter = false
+  socket.emit('keyPressed', key)
 }
 
 function registerSocketHandlers () {
   socket.on('sentence', sentence => terminal.updateSentence(sentence))
   socket.on('heartbeat', players => playersHandler.updatePlayers(players))
   socket.on('disconnect', playerId => playersHandler.removePlayer(playerId))
-  socket.on('wrongLetter', () => { terminal.wrongLetter = true })
+  socket.on('wrongLetter', () => {
+    terminal.wrongLetter = true
+  })
   socket.on('winner', winner => {}) // display some sort of message? perhaps start drawing a countdown
   socket.on('restart', () => playersHandler.resetPlayers())
 }
