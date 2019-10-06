@@ -15,6 +15,10 @@ window.setup = function () {
   registerSocketHandlers()
 }
 
+window.onresize = function (e) {
+  resizeCanvas(windowWidth, windowHeight)
+}
+
 window.draw = function () {
   background(14, 16, 18)
   if (playersHandler.getPlayer(socket.id)) {
